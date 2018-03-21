@@ -1,4 +1,4 @@
-package nju.ktv.zrz;
+package nju.ktv;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
