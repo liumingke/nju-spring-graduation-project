@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>员工信息管理</title>
+</head>
+<body>
+	<h1>新增员工</h1>
+	<form th:action="@{/staff}" method="post">
+		<fieldset>
+			<legend>员工信息添加</legend>
+			<label for="staffname">员工姓名:</label>
+			<input type="text" name="staffname" id="staffname"/><br/><br/>
+			<label for="post">工作岗位:</label>
+			<input type="text" name="post" id="post"/><br/><br/>
+			<label for="birthday">出生日期:</label>
+			<input type="text" name="birthday" id="birthday"/><br/><br/>
+			<label for="age">年龄:</label>
+			<input type="text" name="age" id="age"/><br/><br/>
+			<label for="salary">每月工资:</label>
+			<input type="text" name="salary" id="salary"/><br/><br/>
+			
+			<input type="submit" value="确认添加"/>
+		</fieldset>
+	</form>
+
+</body>
+</html>

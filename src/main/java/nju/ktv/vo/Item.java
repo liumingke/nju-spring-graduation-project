@@ -12,7 +12,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import nju.ktv.vo.Item_order_detail.Item_order_detailBuilder;
 
 @Entity
 @Table(name="item")

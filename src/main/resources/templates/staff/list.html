@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>员工信息管理</title>
+</head>
+<body>
+	<h1>员工信息列表</h1>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>ID</th>
+				<th>姓名</th>
+				<th>工作岗位</th>
+				<th>出生日期</th>
+				<th>年龄</th>
+				<th>工资</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		
+		<tbody th:each="staff , stat: ${staffs}">
+			<tr>
+				<td th:text="${stat.count}"></td>
+				<td th:text="${staff.id}"></td>
+				<td th:text="${staff.staffname}"></td>
+				<td th:text="${staff.post}"></td>
+				<td th:text="${staff.birthday}"></td>
+				<td th:text="${staff.age}"></td>
+				<td th:text="${staff.salary}"></td>
+				<td>
+					<a th:href="|@{/staff}/${pageDto.current_page}/${staff.id}/0|">删除</a>
+					<a th:href="|@{/staff}/${pageDto.current_page}/${staff.id}|">修改</a>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>
+					<span th:text="${pageDto.current_page}"></span>/<span th:text="${pageDto.total_pages}"></span> ,
+					<span th:text="${pageDto.total_rows}"></span>条记录
+					<a th:href="@{/staff/1}">首页</a>
+					<span th:if="${pageDto.hasPrev}">
+						<a th:href="@{/staff/{current_page}(current_page=${pageDto.current_page-1})}">上一页</a>
+					</span>
+					<span th:if="${pageDto.hasNext}">
+						<a th:href="@{/staff/{current_page}(current_page=${pageDto.current_page+1})}">下一页</a>
+					</span>
+					<a th:href="@{/staff/{current_page}(current_page=${pageDto.total_pages})}">尾页</a>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	<br/><br/><br/>
+	<a th:href="@{/}">继续添加员工信息</a>
+</body>
+</html>
