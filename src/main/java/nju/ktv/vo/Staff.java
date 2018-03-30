@@ -11,6 +11,8 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,6 +41,7 @@ public class Staff {
 	private String post;//员工岗位
 	@NonNull
 	@DateTimeFormat(pattern="yyyy-MM-dd")//标注该属性只接收指定格式的日期，默认为 yyyy/MM/dd
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date birthday;
 	@NonNull
 	private Integer age;

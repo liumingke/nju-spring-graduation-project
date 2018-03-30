@@ -12,6 +12,18 @@ import nju.ktv.vo.Staff;
 
 public interface StaffDao extends JpaRepository<Staff, Integer> {
 
-	@Query(value = "select id, staffname, post, birthday, age, salary from staff order by id desc limit ?1 , ?2" , nativeQuery=true)
+	@Query(value = "select id, staffname, post, birthday, age, salary from staff order by id limit ?1 , ?2" , nativeQuery=true)
 	List<Staff> listByPage(int offset_row , int page_size);
+	
+	@Query(value = "select count(id) from staff where post = ?" , nativeQuery=true)
+	int post_count(String post);
+	
+	@Query(value = "select id, staffname, post, birthday, age, salary from staff where post = ?1 order by id limit ?2 , ?3" , nativeQuery=true)
+	List<Staff> listByPost(String post, int offset_row , int page_size);
+	
+	@Query(value = "select count(id) from staff where staffname = ?", nativeQuery=true)
+	int name_count(String name);
+	
+	@Query(value = "select id, staffname, post, birthday, age, salary from staff where staffname = ?1 order by id limit ?2 , ?3" , nativeQuery=true)
+	List<Staff> findByName(String name , int offset_row , int page_size);
 }

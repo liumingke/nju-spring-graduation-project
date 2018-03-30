@@ -1,59 +1,243 @@
-<!DOCTYPE html>
-<html>
+
+<!doctype html>
+<html class="no-js">
 <head>
-<meta charset="UTF-8"/>
-<title>员工信息管理</title>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/><!-- 在IE运行最新的渲染模式 -->
+  <title>员工管理</title>
+  <meta name="description" content="这是一个 table 页面"/>
+  <meta name="keywords" content="table"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- 页面的宽度自动适应手机屏幕的宽度
+  	width=device-width ：表示宽度是设备屏幕的宽度
+	initial-scale=1.0：表示初始的缩放比例
+	minimum-scale=0.5：表示最小的缩放比例
+	maximum-scale=2.0：表示最大的缩放比例
+	user-scalable=yes：表示用户是否可以调整缩放比例-->
+  <meta name="renderer" content="webkit"/><!-- 指定网页使用webkit引擎渲染，360浏览器6.5+有效 -->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/><!-- 禁止百度移动搜索转码 -->
+  <link rel="icon" type="image/png" href="../i/favicon.png"/><!-- 网站缩略标志和收藏夹图标位置 -->
+  <link rel="apple-touch-icon-precomposed" href="i/app-icon72x72@2x.png"/>
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="http://localhost:8888/ktv/css/amazeui.min.css"/><!-- 绝对路径 -->
+  <link rel="stylesheet" href="../css/admin.css"/><!-- 相对路径 -->
+  <link rel="stylesheet" href="../css/layui.css"/>
+  <style type="text/css">
+  	.am-form input[type=text]{
+  	  	display: inline-block; 
+   		width: 50px;
+  	}
+  	.table-main a {
+    background: #fff;
+	}
+	a.am-btn-default:visited {
+   	color:#3bb4f2;
+	}
+	a.am-btn-default:hover{
+	color:#333;}
+  </style>
 </head>
 <body>
-	<h1>员工信息列表</h1>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<header class="am-topbar am-topbar-inverse admin-header">
+  <div class="am-topbar-brand">
+    <strong>量贩式音乐会所</strong> <small>后台员工管理</small>
+  </div>
+
+  <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+  <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+    <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+      <li class="am-dropdown" data-am-dropdown="">
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+          <span class="am-icon-users"></span> 总经理 <span class="am-icon-caret-down"></span>
+        </a>
+        <ul class="am-dropdown-content">
+          <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
+          <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+          <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+        </ul>
+      </li>
+      <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+    <div class="am-offcanvas-bar admin-offcanvas-bar">
+      <ul class="am-list admin-sidebar-list">
+        <li><a href="#"><span class="am-icon-home"></span> 首页</a></li>
+        <li><a href="/ktv/staff/1"><span class="am-icon-table"></span> 员工信息列表</a></li>
+        <li><a href="#"><span class="am-icon-sign-out"></span> 注销</a></li>
+      </ul>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-bookmark"></span> 公告</p>
+          <p>欢迎使用本系统，祝您生活愉快！</p>
+        </div>
+      </div>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-tag"></span> wiki</p>
+          <p>Welcome to the Manager wiki!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">表格</strong> / <small>Table</small></div>
+      </div>
+
+      <hr/>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-btn-toolbar">
+            <div class="am-btn-group am-btn-group-xs">
+              <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span><a th:href="@{/}">新增</a></button>
+            </div>
+          </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-3">
+          <div class="am-form-group">
+            <select id="post" data-am-selected="{btnSize: 'sm'}">
+              <option value="所有类别">所有类别</option>
+              <option value="收银员">收银员</option>
+              <option value="仓库管理员">仓库管理员</option>
+              <option value="服务生">服务生</option>
+              <option value="前台服务员">前台服务员</option>
+              <option value="歌曲管理">歌曲管理</option>
+            </select>
+          </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-3">
+          <div class="am-input-group am-input-group-sm">
+            <input id="search_input" type="text" class="am-form-field" placeholder="请输入员工姓名"/>
+          <span class="am-input-group-btn">
+            <button class="am-btn am-btn-default" type="button" onclick="search()">搜索</button>
+          </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="am-g">
+        <div class="am-u-sm-12">
+          <form class="am-form">
+            <table class="am-table am-table-striped am-table-hover table-main">
+              <thead>
+              <tr>
+                <th class="table-id">ID</th>
+                <th class="table-name">员工姓名</th>
+                <th class="table-post">工作岗位</th>
+                <th class="table-birthday am-hide-sm-only">员工生日</th>
+                <th class="table-age am-hide-sm-only">年龄</th>
+                <th class="table-salary am-hide-sm-only">工资</th>
+                <th class="table-set">操作</th>
+              </tr>
+              </thead>
+              <tbody id="table_content">
+              </tbody>
+              
+              
+            </table>
+            <br/>
+            <div class="layui-container">
+            		<div class="layui-row">
+            			<div class="layui-fluid">
+            				<div class="layui-col-md-offset4" id="page"></div>
+            			</div>
+            		</div>
+            </div>
+            <input id="total_rows" type="hidden" th:value="${pageDto.total_rows}"/>
+            <input id="page_size" type="hidden" th:value="${pageDto.page_size}"/>
+            <input id="current_page" type="hidden" th:value="${pageDto.current_page}"/>
+           <!--  <div class="am-cf">
+              共 <span th:text="${pageDto.total_rows}"></span> 条记录
+              <div class="am-fr">
+                <ul class="am-pagination">
+                  <li th:if="${pageDto.hasPrev}">
+                  <a href="#">«</a></li>
+                  <li class="page-item" th:each="i : ${#numbers.sequence(1,pageDto.total_pages)}">
+                  <a th:href="${i}"><span th:text="${i}"></span></a></li>
+                  <li th:if="${pageDto.hasNext}">
+                  <a href="#">»</a></li>
+                </ul>
+              </div>
+            </div> -->
+            <hr />
+            <p>注：.....</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+    <footer class="admin-content-footer">
+      <hr/>
+      <p class="am-padding-left">@ 2018 KTV,by liumingke.</p>
+    </footer>
+
+  </div>
+  <!-- content end -->
+</div>
+
+<!-- <a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+<footer>
+  <hr/>
+  <p class="am-padding-left">@ 2018 KTV,by liumingke.</p>
+</footer> -->
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="../js/jquery-3.2.1.min.js"></script>
+<!--<![endif]-->
+<script src="../js/amazeui.min.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/layui.js"></script>
+<script type="text/javascript">
+	var onpage=$('#current_page').val();
+	var post = $('#post').val();
+	var name = null;
+	var empty;
+	var total = $('#total_rows').val();
+	$("#post").change(function(){
+		name = null;
+		post = document.getElementById('post').value;
+		onpage = 1;
+		getStaffPageInfo(onpage);
+		myfunction(total);
+	})
 	
-	<table>
-		<thead>
-			<tr>
-				<th>序号</th>
-				<th>ID</th>
-				<th>姓名</th>
-				<th>工作岗位</th>
-				<th>出生日期</th>
-				<th>年龄</th>
-				<th>工资</th>
-				<th>操作</th>
-			</tr>
-		</thead>
-		
-		<tbody th:each="staff , stat: ${staffs}">
-			<tr>
-				<td th:text="${stat.count}"></td>
-				<td th:text="${staff.id}"></td>
-				<td th:text="${staff.staffname}"></td>
-				<td th:text="${staff.post}"></td>
-				<td th:text="${staff.birthday}"></td>
-				<td th:text="${staff.age}"></td>
-				<td th:text="${staff.salary}"></td>
-				<td>
-					<a th:href="|@{/staff}/${pageDto.current_page}/${staff.id}/0|">删除</a>
-					<a th:href="|@{/staff}/${pageDto.current_page}/${staff.id}|">修改</a>
-				</td>
-			</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td>
-					<span th:text="${pageDto.current_page}"></span>/<span th:text="${pageDto.total_pages}"></span> ,
-					<span th:text="${pageDto.total_rows}"></span>条记录
-					<a th:href="@{/staff/1}">首页</a>
-					<span th:if="${pageDto.hasPrev}">
-						<a th:href="@{/staff/{current_page}(current_page=${pageDto.current_page-1})}">上一页</a>
-					</span>
-					<span th:if="${pageDto.hasNext}">
-						<a th:href="@{/staff/{current_page}(current_page=${pageDto.current_page+1})}">下一页</a>
-					</span>
-					<a th:href="@{/staff/{current_page}(current_page=${pageDto.total_pages})}">尾页</a>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-	<br/><br/><br/>
-	<a th:href="@{/}">继续添加员工信息</a>
+	function search(){
+		name = $('#search_input').val();
+		if(name!=""){
+			onpage = 1;
+			getStaffPageInfo(onpage);
+			myfunction(total);
+		}
+		else
+			alert("输入为空");
+	}
+</script>
+<script src="../js/list.js"></script>
 </body>
 </html>
